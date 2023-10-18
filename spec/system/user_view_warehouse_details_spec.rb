@@ -35,7 +35,6 @@ describe 'Usuário vê detalhes de um galpão' do
   	click_on('Voltar')
 
   	# Assert
-
   	expect(current_path).to eq(root_path)
   end
 end
