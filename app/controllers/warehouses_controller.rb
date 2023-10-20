@@ -6,16 +6,43 @@ class WarehousesController < ApplicationController
   end
 
   def new
-
+    @warehouse = Warehouse.new
   end
 
   def create
     warehouse_params = params.require(:warehouse).permit(:name, :description, :code, :address,
                                                          :city, :cep, :area)
 
-    w = Warehouse.new(warehouse_params)
+    @warehouse = Warehouse.new(warehouse_params)
 
-    w.save()
-    redirect_to root_path, notice: 'Galpão cadastrado com sucesso.'
+    if @warehouse.save
+      redirect_to root_path, notice: 'Galpão cadastrado com sucesso.'
+    else
+      flash.now[:notice] = 'Galpão não cadastrado.'
+      render :new
+    end
+  end
+
+  def edit
+    id = params[:id]
+    @warehouse = Warehouse.find(id)
+  end
+
+  def update
+    id = params[:id]
+    @warehouse = Warehouse.find(id)
+
+    warehouse_params = params.require(:warehouse).permit(:name, :description, :code, :address,
+                                                         :city, :cep, :area)
+    if @warehouse.update(warehouse_params)
+      redirect_to warehouse_path(@warehouse.id), notice: 'Galpão atualizado com sucesso.'
+    else
+      flash.now[:notice] = 'Não foi possivel atualizar o galpão. lalal'
+      render 'edit'
+    end
+  end
+
+  def set_warehouse
+    @warehouse = Warehouse.find(params[:id])
   end
 end
