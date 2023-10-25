@@ -60,4 +60,17 @@ RSpec.describe Warehouse, type: :model do
       expect(result).to eq false
     end
   end
+
+  describe '#full_description' do
+    it 'exibre o nome e o código social' do
+      # Arrange
+      w = Warehouse.new(name: 'Rio', code: 'RIO')
+
+      # Act
+      result = w.full_description
+
+      # Assert
+      expect(result).to eq 'RIO - Rio'
+    end
+  end
 end

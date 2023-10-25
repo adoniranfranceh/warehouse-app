@@ -62,4 +62,17 @@ RSpec.describe Supplier, type: :model do
 	  	expect(second_supplier).not_to be_valid
   	end
   end
+
+  describe '#description' do
+    it 'exibe o nome fantasia e o cnpj' do
+      # Arrange
+      supplier = Supplier.new(brand_name: 'Spark', registration_number: '56144734000107')
+
+      # Act
+      result = supplier.description
+
+      # Assert
+      expect(result).to eq 'Spark - 56144734000107'
+    end
+  end
 end
