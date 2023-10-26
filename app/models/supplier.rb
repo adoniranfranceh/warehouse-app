@@ -3,6 +3,6 @@ class Supplier < ApplicationRecord
   validates :registration_number, :email, uniqueness: true
 
   def description
-    "#{brand_name} - #{registration_number}"
+    "#{corporate_name} - #{registration_number}"
   end
 end

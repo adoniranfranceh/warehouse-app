@@ -30,17 +30,17 @@ describe 'Usuário cadastra um pedido' do
   	visit root_path
   	click_on 'Cadastrar pedido'
   	select 'SDU - Rio', from: 'Galpão Destino'
-  	select 'Spark - 24785893000196', from: 'Fornecedor'
+    select 'Spark Industries Brasil LTDA - 24785893000196', from: 'Fornecedor'
   	fill_in 'Data Prevista de Entrega', with: '22/12/2023'
   	click_on 'Gravar'
 
   	# Assert
     expect(page).to have_content 'Pedido registrado com sucesso.'
     expect(page).to have_content 'Pedido ABC12345'
-  	expect(page).to have_content 'Galpão Destino: Rio'
-  	expect(page).to have_content 'Fornecedor: Spark Industries Brasil LTDA'
-  	expect(page).to have_content 'Usuário Responsável: Sergio - sergio@email.com'
-  	expect(page).to have_content 'Data Prevista de Entrega: 22/12/2023'
+    expect(page).to have_content 'Galpão Destino: SDU - Rio'
+    expect(page).to have_content 'Fornecedor: Spark Industries Brasil LTDA - 24785893000196'
+    expect(page).to have_content 'Usuário Responsável: Sergio - sergio@email.com'
+    expect(page).to have_content 'Data Prevista de Entrega: 22/12/2023'
   end
 
   it 'e data estimada de entrega é igual a hoje' do
@@ -61,7 +61,7 @@ describe 'Usuário cadastra um pedido' do
     visit root_path
     click_on 'Cadastrar pedido'
     select 'SDU - Rio', from: 'Galpão Destino'
-    select 'Spark - 24785893000196', from: 'Fornecedor'
+    select 'Spark Industries Brasil LTDA - 24785893000196', from: 'Fornecedor'
     fill_in 'Data Prevista de Entrega', with: Date.today
     click_on 'Gravar'
 
@@ -88,7 +88,7 @@ describe 'Usuário cadastra um pedido' do
     visit root_path
     click_on 'Cadastrar pedido'
     select 'SDU - Rio', from: 'Galpão Destino'
-    select 'Spark - 24785893000196', from: 'Fornecedor'
+    select 'Spark Industries Brasil LTDA - 24785893000196', from: 'Fornecedor'
     fill_in 'Data Prevista de Entrega', with: ''
     click_on 'Gravar'
 

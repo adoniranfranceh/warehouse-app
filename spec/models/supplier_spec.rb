@@ -64,15 +64,15 @@ RSpec.describe Supplier, type: :model do
   end
 
   describe '#description' do
-    it 'exibe o nome fantasia e o cnpj' do
+    it 'exibe o razão social e o cnpj' do
       # Arrange
-      supplier = Supplier.new(brand_name: 'Spark', registration_number: '56144734000107')
+      supplier = Supplier.new(corporate_name: 'Spark Industries Brasil LTDA', registration_number: '56144734000107')
 
       # Act
       result = supplier.description
 
       # Assert
-      expect(result).to eq 'Spark - 56144734000107'
+      expect(result).to eq 'Spark Industries Brasil LTDA - 56144734000107'
     end
   end
 end

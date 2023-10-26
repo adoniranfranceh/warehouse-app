@@ -1,0 +1,11 @@
+<h1>Resultado da busca por: <%= @code %></h1>
+
+<% if @order.present? %>
+  <p>1 pedido encontrado</p>
+  <dl>
+    <dt><%= Order.human_attribute_name(:warehouse_id) %>:</dt>
+    <dd><%= @order.warehouse.full_description %></dd>
+    <dt><%= Order.human_attribute_name(:supplier_id) %>:</dt>
+    <dd><%= @order.supplier.description %></dd>
+  </dl>
+<% end %>
