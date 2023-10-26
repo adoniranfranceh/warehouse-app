@@ -23,6 +23,7 @@ describe 'Usuário cadastra um pedido' do
                     full_address: 'Av das Palmas, 100', city: 'Bauru', state: 'SP', email: 'contato@gmail.com')
     supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '24785893000196',
                     full_address: 'Torre da Indústria, 1', city: 'Teresina', state: 'PI', email: 'vendedor@gmail.com')
+    allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABC12345')
 
   	# Act
   	login_as(user)
@@ -35,6 +36,7 @@ describe 'Usuário cadastra um pedido' do
 
   	# Assert
   	expect(page).to have_content 'Pedido cadastrado com sucesso.'
+    expect(page).to have_content 'Pedido ABC12345'
   	expect(page).to have_content 'Galpão Destino: Rio'
   	expect(page).to have_content 'Fornecedor: Spark Industries Brasil LTDA'
   	expect(page).to have_content 'Usuário Responsável: Sergio - sergio@email.com'
