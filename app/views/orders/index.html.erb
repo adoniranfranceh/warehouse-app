@@ -1,0 +1,7 @@
+<h1>Meus Pedidos</h1>
+
+<% if @orders.present? %>
+  <% @orders.each do |order| %>
+    <%= render order %>
+  <% end %>
+<% end %>
