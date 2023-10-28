@@ -10,8 +10,16 @@
   <dd><%= @order.user.description %></dd>
   <dt><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
   <dd><%= I18n.localize(@order.estimated_delivery_date) %></dd>
+  <dt><%= Order.human_attribute_name(:status) %>:</dt>
+  <dd><%= t(@order.status) %></dd>
 </dl>
 
 <div>
   <%= link_to 'Editar', edit_order_path(@order) %>
 </div>
+<% if @order.peding? %>
+  <div>
+    <%= button_to 'Marcar como ENTREGUE', delivered_order_path(@order.id) %>
+    <%= button_to 'Marcar como CANCELADO', canceled_order_path(@order.id) %>
+  </div>
+<% end %>

@@ -41,6 +41,7 @@ describe 'Usuário cadastra um pedido' do
     expect(page).to have_content 'Fornecedor: Spark Industries Brasil LTDA - 24785893000196'
     expect(page).to have_content 'Usuário Responsável: Sergio - sergio@email.com'
     expect(page).to have_content 'Data Prevista de Entrega: 22/12/2023'
+    expect(page).to have_content 'Situação do Pedido: Pendente'
   end
 
   it 'e data estimada de entrega é igual a hoje' do
