@@ -97,5 +97,6 @@ describe 'Usuário vé seus próprios pedidos' do
     expect(page).to have_content('Itens do Pedido')
     expect(page).to have_content('19 x Produto A')
     expect(page).to have_content('15 x Produto B')
+    expect(page).not_to have_content('Produto C')
   end
 end
