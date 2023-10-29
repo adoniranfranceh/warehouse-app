@@ -72,4 +72,30 @@ describe 'Usuário vé seus próprios pedidos' do
     expect(current_path).not_to eq order_path(order.id)
     expect(page).to have_content('Você não possui acesso a este pedido.')
   end
+
+  it 'e vê itens do pedido' do
+    # Arrange
+    user = User.create!(name: 'User', email: 'user@gmail.com', password: 'password')
+    warehouse = Warehouse.create!(name: 'Rio', code: 'SDU', city: 'Rio de Janeiro', area: 60_000,
+                                  address: 'Av do  Porto, 1000', cep: '20000-000', description: 'Galpão do Rio')
+    supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '24785893000196',
+                                full_address: 'Torre da Indústria, 1', city: 'Teresina', state: 'PI', email: 'vendedor@gmail.com')
+    order = Order.create!(user: user, warehouse: warehouse, supplier: supplier, estimated_delivery_date: 1.day.from_now)
+    product_a = ProductModel.create!(name: 'Produto A', width: 10, weight: 15, height: 20, depth: 30, supplier: supplier, sku: 'PRODUTO-A')
+    product_b = ProductModel.create!(name: 'Produto B', width: 10, weight: 15, height: 20, depth: 30, supplier: supplier, sku: 'PRODUTO-B')
+    product_c = ProductModel.create!(name: 'Produto C', width: 10, weight: 15, height: 20, depth: 30, supplier: supplier, sku: 'PRODUTO-C')
+    OrderItem.create!(product_model: product_a, order: order, quantity: 19)
+    OrderItem.create!(product_model: product_b, order: order, quantity: 15)
+
+    # Act
+    login_as(user)
+    visit root_path
+    click_on 'Meus Pedidos'
+    click_on order.code
+
+    # Assert
+    expect(page).to have_content('Itens do Pedido')
+    expect(page).to have_content('19 x Produto A')
+    expect(page).to have_content('15 x Produto B')
+  end
 end
