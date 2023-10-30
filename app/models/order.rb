@@ -8,7 +8,7 @@ class Order < ApplicationRecord
 
   validates :code, :estimated_delivery_date, presence: true
 
-  before_validation :generate_code
+  before_validation :generate_code, on: :create
 
   validate :estimated_delivery_date_is_future
 
