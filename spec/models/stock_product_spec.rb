@@ -39,4 +39,39 @@ RSpec.describe StockProduct, type: :model do
       expect(stock_product.serial_number).to eq original_serial_number
     end
   end
+
+  describe '#available?' do
+    it 'true se não tiver destino' do
+      # Arrange
+      user = User.create!(name: 'Sergio', email: 'sergio@email.com', password: 'password')
+      warehouse = Warehouse.create!(name: 'Rio', code: 'SDU', city: 'Rio de Janeiro', area: 60_000,
+                    address: 'Av do  Porto, 1000', cep: '20000-000', description: 'Galpão do Rio')
+      supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '24785893000196',
+                    full_address: 'Torre da Indústria, 1', city: 'Teresina', state: 'PI', email: 'vendedor@gmail.com')
+      product_a = ProductModel.create!(name: 'Produto A', width: 10, weight: 15, height: 20, depth: 30, supplier: supplier, sku: 'PRODUTO-A')
+      order = Order.create(user: user, warehouse: warehouse, supplier: supplier, estimated_delivery_date: 1.day.from_now, status: :delivered)
+
+      # Act
+      stock_product = StockProduct.create!(order: order, warehouse: warehouse, product_model: product_a)
+      # Assert
+      expect(stock_product.available?).to eq true
+    end
+
+    it 'false se tiver destino' do
+      # Arrange
+      user = User.create!(name: 'Sergio', email: 'sergio@email.com', password: 'password')
+      warehouse = Warehouse.create!(name: 'Rio', code: 'SDU', city: 'Rio de Janeiro', area: 60_000,
+                    address: 'Av do  Porto, 1000', cep: '20000-000', description: 'Galpão do Rio')
+      supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '24785893000196',
+                    full_address: 'Torre da Indústria, 1', city: 'Teresina', state: 'PI', email: 'vendedor@gmail.com')
+      product_a = ProductModel.create!(name: 'Produto A', width: 10, weight: 15, height: 20, depth: 30, supplier: supplier, sku: 'PRODUTO-A')
+      order = Order.create(user: user, warehouse: warehouse, supplier: supplier, estimated_delivery_date: 1.day.from_now, status: :delivered)
+
+      # Act
+      stock_product = StockProduct.create!(order: order, warehouse: warehouse, product_model: product_a)
+      stock_product.create_stock_product_destination!(recipient: 'João', address: 'Rua do João')
+      # Assert
+      expect(stock_product.available?).to eq false
+    end
+  end
 end
