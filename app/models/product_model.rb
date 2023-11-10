@@ -3,4 +3,5 @@ class ProductModel < ApplicationRecord
   validates :name, :sku, presence: true
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :stock_products
 end
